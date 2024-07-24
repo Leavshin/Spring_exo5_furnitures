@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Meubles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Liste des Meubles</h1>
+    <a href="/furniture/add" class="btn btn-primary mb-3">Ajouter un Meuble</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="furniture : ${furnitureList}">
+            <td th:text="${furniture.name}"></td>
+            <td th:text="${furniture.description}"></td>
+            <td th:text="${furniture.price}"></td>
+            <td th:text="${furniture.stock}"></td>
+            <td>
+                <a th:href="@{/furniture/edit/{id}(id=${furniture.id})}" class="btn btn-warning">Modifier</a>
+                <a th:href="@{/furniture/delete/{id}(id=${furniture.id})}" class="btn btn-danger" th:onclick="return confirm('Voulez-vous vraiment supprimer ce meuble ?')">Supprimer</a>
+                <form th:action="@{/cart/add}" method="post" class="d-inline">
+                    <input type="hidden" name="furnitureId" th:value="${furniture.id}" />
+                    <input type="number" name="quantity" value="1" min="1" max="${furniture.stock}" class="form-control d-inline" style="width: 80px;"/>
+                    <button type="submit" class="btn btn-success">Ajouter au Panier</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panier</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Panier</h1>
+    <a href="/cart/clear" class="btn btn-danger mb-3" th:onclick="return confirm('Voulez-vous vraiment vider le panier ?')">Vider le Panier</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom du Meuble</th>
+            <th>Quantité</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartItem : ${cartItems}">
+            <td th:text="${#aggregates.find(furnitureList, 'id', cartItem.furnitureId).name}"></td>
+            <td th:text="${cartItem.quantity}"></td>
+            <td>
+                <a th:href="@{/cart/remove/{id}(id=${cartItem.id})}" class="btn btn-danger" th:onclick="return confirm('Voulez-vous vraiment supprimer cet élément du panier ?')">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/furniture" class="btn btn-secondary">Continuer vos achats</a>
+</div>
+</body>
+</html>
