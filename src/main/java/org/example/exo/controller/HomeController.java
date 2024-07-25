@@ -11,5 +11,3 @@ public class HomeController {
         return "home";
     }
 }
-
-//https://github.com/Leavshin/Spring_exo5_furnitures.git

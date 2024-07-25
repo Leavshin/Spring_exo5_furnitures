@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/cart")
@@ -26,19 +25,15 @@ public class CartController {
     @GetMapping
     public String listCartItems(Model model) {
         List<CartItem> cartItems = cartService.getAllCartItems();
+        List<Furniture> furnitureList = furnitureService.getAllFurniture();
         model.addAttribute("cartItems", cartItems);
+        model.addAttribute("furnitureList", furnitureList);
         return "cart/list";
     }
 
     @PostMapping("/add")
     public String addToCart(@RequestParam Long furnitureId, @RequestParam int quantity) {
-        Optional<Furniture> furniture = furnitureService.getFurnitureById(furnitureId);
-        if (furniture.isPresent()) {
-            CartItem cartItem = new CartItem();
-            cartItem.setFurnitureId(furnitureId);
-            cartItem.setQuantity(quantity);
-            cartService.addToCart(cartItem);
-        }
+        cartService.addToCart(furnitureId, quantity);
         return "redirect:/cart";
     }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajouter/Modifier un Meuble</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <th:block th:replace="fragments/bootstrap :: head"></th:block>
 </head>
 <body>
 <div class="container">
@@ -11,31 +11,31 @@
     <form th:action="@{/furniture/add}" th:object="${furniture}" method="post">
         <input type="hidden" th:field="*{id}" />
 
-        <div class="form-group">
+        <div class="form-group mt-2">
             <label for="name">Nom</label>
             <input type="text" id="name" class="form-control" th:field="*{name}" />
             <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mt-2">
             <label for="description">Description</label>
             <textarea id="description" class="form-control" th:field="*{description}" rows="4"></textarea>
             <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mt-2">
             <label for="price">Prix</label>
             <input type="number" id="price" class="form-control" th:field="*{price}" />
             <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mt-2">
             <label for="stock">Stock</label>
             <input type="number" id="stock" class="form-control" th:field="*{stock}" />
             <div class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+        <button type="submit" class="btn btn-primary mt-3">Sauvegarder</button>
     </form>
     <a href="/furniture" class="btn btn-secondary mt-3">Retour à la Liste</a>
 </div>

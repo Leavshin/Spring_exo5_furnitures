@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Panier</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <th:block th:replace="fragments/bootstrap :: head"></th:block>
 </head>
 <body>
 <div class="container">
     <h1 class="mt-5">Panier</h1>
-    <a href="/cart/clear" class="btn btn-danger mb-3" th:onclick="return confirm('Voulez-vous vraiment vider le panier ?')">Vider le Panier</a>
-    <table class="table table-striped">
+    <table class="table table-bordered mt-3">
         <thead>
         <tr>
-            <th>Nom du Meuble</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Prix</th>
             <th>Quantité</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="cartItem : ${cartItems}">
-            <td th:text="${#aggregates.find(furnitureList, 'id', cartItem.furnitureId).name}"></td>
-            <td th:text="${cartItem.quantity}"></td>
+            <td th:each="furniture : ${furnitureList}"
+                th:if="${furniture.id} == ${cartItem.furnitureId}"
+                th:text="${furniture.name}">Nom Meuble</td>
+            <td th:each="furniture : ${furnitureList}"
+                th:if="${furniture.id} == ${cartItem.furnitureId}"
+                th:text="${furniture.description}">Description Meuble</td>
+            <td th:each="furniture : ${furnitureList}"
+                th:if="${furniture.id} == ${cartItem.furnitureId}"
+                th:text="${furniture.price}">Prix Meuble</td>
+            <td th:text="${cartItem.quantity}">Quantité</td>
             <td>
-                <a th:href="@{/cart/remove/{id}(id=${cartItem.id})}" class="btn btn-danger" th:onclick="return confirm('Voulez-vous vraiment supprimer cet élément du panier ?')">Supprimer</a>
+                <a th:href="@{/cart/remove/{id}(id=${cartItem.id})}" class="btn btn-danger">Retirer</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a href="/furniture" class="btn btn-secondary">Continuer vos achats</a>
+    <a href="/cart/clear" class="btn btn-danger mt-3">Vider le Panier</a>
+    <a href="/furniture" class="btn btn-primary mt-3">Continuer les achats</a>
 </div>
 </body>
 </html>
